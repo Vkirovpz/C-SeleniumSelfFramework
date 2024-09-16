@@ -1,24 +1,12 @@
-using OpenQA.Selenium.Chrome;
+using C_SeleniumSelfFramework.utilities;
 using OpenQA.Selenium;
-using WebDriverManager.DriverConfigs.Impl;
 using OpenQA.Selenium.Support.UI;
 
 namespace C_SeleniumSelfFramework
 {
-    public class End2EndTest
+    public class End2EndTest : BaseClass
     {
-        IWebDriver driver;
 
-        [SetUp]
-        public void StartBrowser()
-        {
-            new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
-            driver = new ChromeDriver();
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            driver.Manage().Window.Maximize();
-            driver.Url = "https://rahulshettyacademy.com/loginpagePractise/";
-        }
         [Test]
         public void EndToEndFlow()
         {
