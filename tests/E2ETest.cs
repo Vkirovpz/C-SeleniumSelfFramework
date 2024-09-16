@@ -2,16 +2,16 @@ using C_SeleniumSelfFramework.utilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace C_SeleniumSelfFramework
+namespace C_SeleniumSelfFramework.tests
 {
-    public class End2EndTest : BaseClass
+    public class End2EndTest : Base
     {
 
         [Test]
         public void EndToEndFlow()
         {
-            String[] expectedProducts = { "iphone X", "Blackberry" };
-            String[] actualProducts = new string[2];
+            string[] expectedProducts = { "iphone X", "Blackberry" };
+            string[] actualProducts = new string[2];
 
             driver.FindElement(By.Id("username")).SendKeys("rahulshettyacademy");
             driver.FindElement(By.Name("password")).SendKeys("learning");
