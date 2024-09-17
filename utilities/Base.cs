@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using WebDriverManager.DriverConfigs.Impl;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Edge;
+using System.Configuration;
 
 namespace C_SeleniumSelfFramework.utilities
 {
@@ -13,12 +14,16 @@ namespace C_SeleniumSelfFramework.utilities
         [SetUp]
         public void StartBrowser()
         {
-            InitBrowser("Chrome");
+            var browserName = ConfigurationManager.AppSettings["browser"];
+            InitBrowser(browserName);
 
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.Manage().Window.Maximize();
             driver.Url = "https://rahulshettyacademy.com/loginpagePractise/";
         }
+
+        public IWebDriver GetDriver() => driver;
+
 
         public void InitBrowser(string browserName)
         {
