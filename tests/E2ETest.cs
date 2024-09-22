@@ -1,21 +1,17 @@
 using C_SeleniumSelfFramework.pageObjects;
 using C_SeleniumSelfFramework.utilities;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 
 namespace C_SeleniumSelfFramework.tests
 {
     public class End2EndTest : Base
     {
-
-        [Test]
-        public void EndToEndFlow()
+        [Test, TestCaseSource("AddTestDataConfig")]
+        public void EndToEndFlow(string username, string password, String[] expectedProducts)
         {
-            string[] expectedProducts = { "iphone X", "Blackberry" };
             string[] actualProducts = new string[2];
 
             LoginPage loginPage = new LoginPage(GetDriver());
-            ProductsPage productsPage = loginPage.ValidLogin("rahulshettyacademy", "learning");
+            ProductsPage productsPage = loginPage.ValidLogin(username, password);
             productsPage.WaitForPageDisplay();
 
             foreach (var product in productsPage.GetCards())
@@ -38,7 +34,13 @@ namespace C_SeleniumSelfFramework.tests
             ConfirmationPage confirmationPage = checkoutPage.Checkout();
 
             confirmationPage.ConfirmPurchase("ind");
-            StringAssert.Contains("Success", confirmationPage.ConfirmationMessage().Text);
+            Assert.That(confirmationPage.ConfirmationMessage().Text.Contains("Success"));
+        }
+
+        public static IEnumerable<TestCaseData> AddTestDataConfig()
+        {
+            yield return new TestCaseData(GetDataParser().ExtractData("username"), GetDataParser().ExtractData("password"), GetDataParser().ExtractDataArray("products"));
+            yield return new TestCaseData(GetDataParser().ExtractData("username_wrong"), GetDataParser().ExtractData("password_wrong"), GetDataParser().ExtractDataArray("products"));
         }
     }
 }

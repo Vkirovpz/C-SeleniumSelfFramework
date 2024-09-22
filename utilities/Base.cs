@@ -23,6 +23,7 @@ namespace C_SeleniumSelfFramework.utilities
         }
 
         public IWebDriver GetDriver() => driver;
+        public static JsonReader GetDataParser() => new JsonReader();
 
 
         public void InitBrowser(string browserName)
