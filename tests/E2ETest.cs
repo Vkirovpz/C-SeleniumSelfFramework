@@ -3,9 +3,13 @@ using C_SeleniumSelfFramework.utilities;
 
 namespace C_SeleniumSelfFramework.tests
 {
+    //run all test methods in one class parallel
+    //[Parallelizable(ParallelScope.Children)]
     public class End2EndTest : Base
     {
         [Test, TestCaseSource("AddTestDataConfig")]
+        //run all data sets of test method in parallel
+        [Parallelizable(ParallelScope.All)]
         public void EndToEndFlow(string username, string password, String[] expectedProducts)
         {
             string[] actualProducts = new string[2];

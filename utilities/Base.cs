@@ -9,7 +9,7 @@ namespace C_SeleniumSelfFramework.utilities
 {
     public class Base
     {
-        public IWebDriver driver;
+        public ThreadLocal<IWebDriver> driver = new ThreadLocal<IWebDriver>();
 
         [SetUp]
         public void StartBrowser()
@@ -17,12 +17,12 @@ namespace C_SeleniumSelfFramework.utilities
             var browserName = ConfigurationManager.AppSettings["browser"];
             InitBrowser(browserName);
 
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            driver.Manage().Window.Maximize();
-            driver.Url = "https://rahulshettyacademy.com/loginpagePractise/";
+            driver.Value.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Value.Manage().Window.Maximize();
+            driver.Value.Url = "https://rahulshettyacademy.com/loginpagePractise/";
         }
 
-        public IWebDriver GetDriver() => driver;
+        public IWebDriver GetDriver() => driver.Value;
         public static JsonReader GetDataParser() => new JsonReader();
 
 
@@ -32,18 +32,18 @@ namespace C_SeleniumSelfFramework.utilities
             {
                 case "Firefox":
                     new WebDriverManager.DriverManager().SetUpDriver(new FirefoxConfig());
-                    driver = new FirefoxDriver();
+                    driver.Value = new FirefoxDriver();
                     break;
 
                 case "Chrome":
                     new WebDriverManager.DriverManager().SetUpDriver(new ChromeConfig());
-                    driver = new ChromeDriver();
+                    driver.Value = new ChromeDriver();
                     break;
 
                 case "Edge":
 
                     new WebDriverManager.DriverManager().SetUpDriver(new EdgeConfig());
-                    driver = new EdgeDriver();
+                    driver.Value = new EdgeDriver();
                     break;
             }
         }
@@ -51,7 +51,7 @@ namespace C_SeleniumSelfFramework.utilities
         [TearDown]
         public void AfterTest()
         {
-            driver.Quit();
+            driver.Value.Quit();
         }
     }
 }

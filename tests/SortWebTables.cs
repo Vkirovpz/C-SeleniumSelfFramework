@@ -12,11 +12,11 @@ namespace C_SeleniumSelfFramework.tests
             var initialList = new List<string>();
 
 
-            SelectElement dropdown = new SelectElement(driver.FindElement(By.Id("page-menu")));
+            SelectElement dropdown = new SelectElement(driver.Value.FindElement(By.Id("page-menu")));
             dropdown.SelectByValue("20");
 
             //Get all products into initial list
-            var productsA = driver.FindElements(By.XPath("//tr/td[1]"));
+            var productsA = driver.Value.FindElements(By.XPath("//tr/td[1]"));
             foreach (var product in productsA)
             {
                 initialList.Add(product.Text);
@@ -26,11 +26,11 @@ namespace C_SeleniumSelfFramework.tests
             initialList.Sort();
 
             //Click the Column to sort in web
-            driver.FindElement(By.CssSelector("th[aria-label *= 'fruit name']")).Click();
+            driver.Value.FindElement(By.CssSelector("th[aria-label *= 'fruit name']")).Click();
 
             //Get all products into sortedListWeb
             var sortedListWeb = new List<string>();
-            var productsB = driver.FindElements(By.XPath("//tr/td[1]"));
+            var productsB = driver.Value.FindElements(By.XPath("//tr/td[1]"));
             foreach (var product in productsB)
             {
                 sortedListWeb.Add(product.Text);
